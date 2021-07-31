@@ -40,7 +40,7 @@ result << '   ' * first.wday
   # 今日の日付は色を反転する
   value = "\e[7m" << value << "\e[0m" if date == today
   result << value << ' '
-  result << "\n" if date.wday == 6
+  result << "\n" if date.saturday?
 end
 # 末尾に改行がある場合は削除する
 result.chomp!
