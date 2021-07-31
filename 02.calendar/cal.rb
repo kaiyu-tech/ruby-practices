@@ -16,7 +16,6 @@ opt.on('-m VAL') {|v| params[:m] = v.to_i }
 begin
   opt.parse!(ARGV)
 rescue OptionParser::InvalidOption => e
-  # エラーの場合はプログラムの実行を終了する
   puts 'cal: ' + e.message
   exit
 end
@@ -25,7 +24,6 @@ begin
   first = Date.new(params[:y], params[:m], 1) # 月初
   last = Date.new(params[:y], params[:m], -1) # 月末
 rescue Date::Error => e
-  # エラーの場合はプログラムの実行を終了する
   puts 'cal: ' + e.message
   exit
 end
