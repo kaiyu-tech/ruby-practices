@@ -126,7 +126,6 @@ begin
   opt.parse!(ARGV)
 rescue OptionParser::InvalidOption => e
   p "cal: #{e.message}"
-  # エラーの場合はプログラムを終了する
   exit
 end
 
