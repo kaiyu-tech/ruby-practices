@@ -113,7 +113,6 @@ def path_detail(path_list)
   "total #{total_blocks}\n#{parts_layout(cols)}"
 end
 
-# トップレベル
 opt = OptionParser.new
 
 params = {}
