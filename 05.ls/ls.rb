@@ -113,7 +113,6 @@ def path_detail(path_list)
   "total #{total_blocks}\n#{parts_layout(cols)}"
 end
 
-# トップレベル
 opt = OptionParser.new
 
 params = {}
@@ -126,7 +125,6 @@ begin
   opt.parse!(ARGV)
 rescue OptionParser::InvalidOption => e
   p "cal: #{e.message}"
-  # エラーの場合はプログラムを終了する
   exit
 end
 
