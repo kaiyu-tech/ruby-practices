@@ -8,43 +8,58 @@ opt = OptionParser.new
 begin
   opt.parse!(ARGV)
 rescue OptionParser::InvalidOption => e
-  p "cal: #{e.message}"
+  p "bowling: #{e.message}"
   exit
 end
 
+def strike?(frame_throw_count, frame_score_total)
+  frame_throw_count == 1 && frame_score_total == 10
+end
+
+def spare?(frame_throw_count, frame_score_total)
+  frame_throw_count == 2 && frame_score_total == 10
+end
+
+# フレームの終了条件を満たしたか？
+def end_of_frame?(frame_number, frame_throw_count, frame_score_total)
+  frame_number < 10 && (strike?(frame_throw_count, frame_score_total) || frame_throw_count == 2)
+end
+
 # スコアの加点を取得する
-def score_bonus(params, throw_count, index)
-  if throw_count == 1
-    params[index + 1] + params[index + 2] # strike
+def score_bonus(frame_throw_count, frame_score_total, next_throw_score, next_next_throw_score)
+  if strike?(frame_throw_count, frame_score_total)
+    next_throw_score + next_next_throw_score
+  elsif spare?(frame_throw_count, frame_score_total)
+    next_throw_score
   else
-    params[index + 1] # spare
+    0
   end
 end
 
 # スコアの合計を作成する
-def score_total(params)
+def game_score_total(scores)
   frame_number = 1
-  throw_count = 0
-  score_subtotal = 0
-  result = 0
+  frame_throw_count = 0
+  frame_score_total = 0
+  game_score_total = 0
 
-  params.each_with_index do |score, index|
-    throw_count += 1
-    score_subtotal += score
-    result += score
+  scores.each_with_index do |current_throw_score, index|
+    frame_throw_count += 1
+    frame_score_total += current_throw_score
+    game_score_total += current_throw_score
 
-    next unless frame_number < 10 && (score == 10 || throw_count == 2)
+    next unless end_of_frame?(frame_number, frame_throw_count, frame_score_total)
 
-    result += score_bonus(params, throw_count, index) if score_subtotal == 10
+    game_score_total += score_bonus(frame_throw_count, frame_score_total, scores[index + 1], scores[index + 2])
 
     frame_number += 1
-    throw_count = 0
-    score_subtotal = 0
+    frame_throw_count = 0
+    frame_score_total = 0
   end
 
-  result
+  game_score_total
 end
 
-params = ARGV[0].gsub('X', '10').split(',').map(&:to_i)
+scores = ARGV[0].gsub('X', '10').split(',').map(&:to_i)
 
-p score_total(params)
+p game_score_total(scores)
