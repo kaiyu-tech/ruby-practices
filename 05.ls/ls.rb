@@ -124,7 +124,7 @@ opt.on('-r') { |v| params[:reverse] = v }
 begin
   opt.parse!(ARGV)
 rescue OptionParser::InvalidOption => e
-  p "cal: #{e.message}"
+  p "ls: #{e.message}"
   exit
 end
 
