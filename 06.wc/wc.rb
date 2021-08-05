@@ -58,7 +58,7 @@ opt.on('-m') { |v| params[:chars] = v }
 begin
   opt.parse!(ARGV)
 rescue OptionParser::InvalidOption => e
-  p "cal: #{e.message}"
+  p "wc: #{e.message}"
   exit
 end
 
