@@ -5,7 +5,8 @@ require './layout'
 
 module LS
   class List
-    include LS::Layout
+    include LS::Layout::Normal
+    include LS::Layout::Detail
 
     def initialize(options, target_path)
       @paths = []
@@ -18,9 +19,9 @@ module LS
 
     def layout
       if @options[:detail]
-        Detail.layout(@paths)
+        layout_detail(@paths)
       else
-        Normal.layout(@paths)
+        layout_normal(@paths)
       end
     end
 
