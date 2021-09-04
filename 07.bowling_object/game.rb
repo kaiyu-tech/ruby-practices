@@ -11,7 +11,7 @@ class Game
   def parse(marks)
     marks.each_with_index do |mark, index|
       if @frames.last&.continue? || final?
-        @frames.last.push(mark)
+        @frames.last << mark
       else
         @frames.last&.calc_bonus(marks, index)
         @frames << Frame.new(mark)

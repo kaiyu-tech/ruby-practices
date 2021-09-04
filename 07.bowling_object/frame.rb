@@ -8,7 +8,7 @@ class Frame
     @bonuses = []
   end
 
-  def push(mark)
+  def <<(mark)
     @shots << Shot.new(mark)
     self
   end
