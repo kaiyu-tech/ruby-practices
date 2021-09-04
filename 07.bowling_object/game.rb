@@ -13,7 +13,7 @@ class Game
       if @frames.last&.continue? || final?
         @frames.last << mark
       else
-        @frames.last&.calc_bonus(marks, index)
+        @frames.last&.calc_bonus(marks[index..index.next])
         @frames << Frame.new(mark)
       end
     end

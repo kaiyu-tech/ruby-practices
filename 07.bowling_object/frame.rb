@@ -13,11 +13,11 @@ class Frame
     self
   end
 
-  def calc_bonus(marks, current)
+  def calc_bonus(marks)
     if strike?
-      push_bonuses([marks[current], marks[current.next]])
+      @bonuses << Shot.new(marks[0]) << Shot.new(marks[1])
     elsif spare?
-      push_bonuses([marks[current]])
+      @bonuses << Shot.new(marks[0])
     end
   end
 
@@ -37,11 +37,5 @@ class Frame
 
   def spare?
     score == 10 && @shots.count == 2
-  end
-
-  def push_bonuses(marks)
-    marks.each do |mark|
-      @bonuses << Shot.new(mark)
-    end
   end
 end
