@@ -19,11 +19,13 @@ class Game
     end
   end
 
-  def final?
-    @frames.count == 10
-  end
-
   def score
     @frames.map(&:score).sum
+  end
+
+  private
+
+  def final?
+    @frames.count == 10
   end
 end
