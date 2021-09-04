@@ -9,11 +9,12 @@ module LS
     include LS::Layout::Detail
 
     def initialize(options, target_path)
+      @paths = []
       @options = options
 
       change(target_path)
 
-      @paths = paths.map { |path| LS::Status.new(path) }
+      parse
     end
 
     def layout
@@ -35,6 +36,12 @@ module LS
       paths = Dir.glob('*', mach_flag)
       paths.reverse! if @options[:reverse]
       paths
+    end
+
+    def parse
+      paths.each do |path|
+        @paths << LS::Status.new(path)
+      end
     end
   end
 end
