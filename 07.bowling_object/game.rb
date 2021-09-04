@@ -13,17 +13,9 @@ class Game
       if @frames.last&.continue? || final?
         @frames.last.push(mark)
       else
-        bonus(marks, index)
+        @frames.last&.calc_bonus(marks, index)
         @frames << Frame.new(mark)
       end
-    end
-  end
-
-  def bonus(marks, current)
-    if @frames.last&.strike?
-      @frames.last.bonus([marks[current], marks[current.next]])
-    elsif @frames.last&.spare?
-      @frames.last.bonus([marks[current]])
     end
   end
 
