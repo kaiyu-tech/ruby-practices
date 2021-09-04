@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 require 'optparse'
-require './list'
+require_relative 'list'
 
 opt = OptionParser.new
 

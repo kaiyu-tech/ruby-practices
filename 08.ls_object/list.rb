@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require './status'
-require './layout'
+require_relative 'status'
+require_relative 'layout'
 
 module LS
   class List
