@@ -21,12 +21,21 @@ module LS
       @file.ljust(width, padding)
     end
 
-    def generate
+    def padding(value, width)
+      if width.nil?
+        value
+      else
+        margin = /\A[0-9]+\z/.match?(value) ? 1 : 0
+        value.rjust(width + margin)
+      end
+    end
+
+    def generate(widths = [])
       [permissions,
-       number_of_hard_links,
-       user_and_group_name_of_owner,
-       bytes,
-       modification_time,
+       padding(number_of_hard_links, widths[1]),
+       padding(user_and_group_name_of_owner, widths[2]),
+       padding(bytes, widths[3]),
+       padding(modification_time, widths[4]),
        file_name]
     end
 

@@ -22,39 +22,17 @@ module LS
 
     module Detail
       def layout_detail(paths)
-        total_blocks, cols = generate(paths)
-
-        files = ''
-        rows = cols[0].length
-        (0...rows).each do |index|
-          cols.each do |col|
-            files += if cols.first == col
-                       col[index]
-                     elsif cols.last == col
-                       " #{col[index]}\n"
-                     else
-                       margin = /\A[0-9]+\z/.match?(col[index]) ? 2 : 1
-                       col[index].rjust(col.max_by(&:length).length + margin)
-                     end
-          end
-        end
-
-        "total #{total_blocks}\n#{files}"
-      end
-
-      private
-
-      def generate(paths)
-        rows = []
+        max_widths = paths.map(&:generate).transpose.map { |col| col.max_by(&:length).length }
 
         total_blocks = 0
+        files = []
 
         paths.each do |path|
           total_blocks += path.blocks
-          rows << path.generate
+          files << path.generate(max_widths).join(' ')
         end
 
-        [total_blocks, rows.transpose]
+        "total #{total_blocks}\n#{files.join("\n")}"
       end
     end
   end
